@@ -12,7 +12,7 @@ RUN curl -sL $FILEBEAT_URL | tar -xz -C .
 # create non-root user
 RUN addgroup -S app && adduser -S -g app app
 COPY ./main.go /go/src
-COPY ./config.yaml /go/src
+COPY ./config.yaml /go/bin
 RUN chown -R app:app /go/src/*
 RUN chown -R app:app $FILEBEAT_HOME
 USER app
