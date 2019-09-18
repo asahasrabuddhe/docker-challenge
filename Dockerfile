@@ -8,17 +8,16 @@ ENV PATH $PATH:$FILEBEAT_HOME
 WORKDIR /opt/
 RUN apk add --update curl
 RUN curl -sL $FILEBEAT_URL | tar -xz -C .
-COPY ./config/filebeat $FILEBEAT_HOME/config
 
 # create non-root user
 RUN addgroup -S app && adduser -S -g app app
 COPY ./main.go /go/src
+COPY ./config.yaml /go/src
 RUN chown -R app:app /go/src/*
 RUN chown -R app:app $FILEBEAT_HOME
 USER app
 
-USER app
-WORKDIR $SERVER
+WORKDIR /go/src
 RUN go build -o /go/bin/main main.go
 
 # run the built server
