@@ -27,7 +27,6 @@ ENV PATH $PATH:$FILEBEAT_HOME
 COPY --from=builder $FILEBEAT_HOME $FILEBEAT_HOME 
 
 RUN addgroup -S app && adduser -S -g app app
-COPY --from=builder /etc/passwd /etc/passwd
 
 USER app
 COPY --from=builder /go/bin/main /go/bin/main
