@@ -1,4 +1,4 @@
-FROM golang:1.11.4-alpine
+FROM golang:1.16.4-alpine
 
 ENV FILEBEAT_VERSION 5.5.0
 ENV FILEBEAT_URL https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FILEBEAT_VERSION}-linux-x86_64.tar.gz
