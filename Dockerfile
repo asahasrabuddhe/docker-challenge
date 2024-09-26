@@ -1,9 +1,9 @@
-FROM golang:1.23
+FROM golang:1.23-alpine
 
-ENV FILEBEAT_VERSION 5.5.0
-ENV FILEBEAT_URL https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FILEBEAT_VERSION}-linux-x86_64.tar.gz
-ENV FILEBEAT_HOME /opt/filebeat-${FILEBEAT_VERSION}-linux-x86_64
-ENV PATH $PATH:$FILEBEAT_HOME
+ENV FILEBEAT_VERSION=5.5.0
+ENV FILEBEAT_URL=https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FILEBEAT_VERSION}-linux-x86_64.tar.gz
+ENV FILEBEAT_HOME=/opt/filebeat-${FILEBEAT_VERSION}-linux-x86_64
+ENV PATH=$PATH:$FILEBEAT_HOME
 
 WORKDIR /opt/
 RUN apk add --update curl
