@@ -1,4 +1,4 @@
-FROM golang:1.11.4-alpine AS builder
+FROM golang:1.23-alpine AS builder
 
 ENV FILEBEAT_VERSION 5.5.0
 ENV FILEBEAT_URL https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FILEBEAT_VERSION}-linux-x86_64.tar.gz
@@ -16,7 +16,7 @@ COPY ./config.yaml /go/bin
 WORKDIR /go/src
 RUN go build -o /go/bin/main main.go
 
-FROM alpine:3.10
+FROM alpine:3.20
 
 ENV FILEBEAT_VERSION 5.5.0
 ENV FILEBEAT_URL https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FILEBEAT_VERSION}-linux-x86_64.tar.gz
@@ -28,7 +28,7 @@ RUN addgroup -S app && adduser -S -g app app
 
 WORKDIR /go/bin
 COPY --from=builder --chown=app:app /go/bin /go/bin
-COPY --from=builder --chown=app:app ${FILEBEAT_HOME} ${FILEBEAT_HOME} 
+COPY --from=builder --chown=app:app ${FILEBEAT_HOME} ${FILEBEAT_HOME}
 
 USER app
 
@@ -38,4 +38,3 @@ CMD if [ $FILEBEAT_ENABLED ]; then \
     else \
         /go/bin/main 2>&1; \
     fi
-
